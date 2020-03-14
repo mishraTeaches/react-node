@@ -1,22 +1,36 @@
 import React,{Component} from 'react';
 import { connect } from 'react-redux';
+import {Link} from 'react-router-dom';
+import Payments from './Payments';
 
-class Header extends Component{
+class Header extends Component
+{
   renderContent(){
     switch(this.props.auth){
       case null:
-      return 'Still deciding';
+      // return 'Still deciding';
+      return;
       case false:
-      return 'im logged out';
+      // return 'im logged out';
+      return <li><a href="/auth/google">Login With Google</a></li>;
       default:
-      return 'im logged in'
+      return <>
+        <li>
+          <Payments/>
+          </li>
+
+    <li style={{margin:'0 10px'}}>Credits : {this.props.auth.credits}</li>
+        <li>
+          <a href="/api/logout">Logout</a>
+          </li>
+          </>
     }
   }
     render(){
         return(
             <nav>
             <div className="nav-wrapper">
-              <a href="#" className="left brand-logo">Emaily</a>
+              <Link to={this.props.auth?'/surveys':'/'} className="left brand-logo">Emaily</Link>
               <ul id="nav-mobile" className="right">
                 <li>
                   {this.renderContent()}
